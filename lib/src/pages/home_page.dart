@@ -14,10 +14,12 @@ import 'package:vuabian/src/providers/all_deck.dart';
 import 'package:vuabian/src/providers/interstitial_counter.dart';
 import 'package:vuabian/src/routes/spread_routes.dart';
 
-// INTERNACIONALIZATION
+// INTERNATIONALIZATION
 import 'package:vuabian/generated/l10n.dart';
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key}) : super(key: key);
+
   //const MyHomePage({Key? key, required this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
@@ -60,96 +62,92 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       drawer: Drawer(
-        child: Container(
-          child: Column(
-            children: <Widget>[
-              Container(
-                child: Image(
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                  image: AssetImage('assets/images/oracle.jpg'),
-                ),
+        child: Column(
+          children: <Widget>[
+            const Image(
+              width: double.infinity,
+              fit: BoxFit.cover,
+              image: AssetImage('assets/images/oracle.jpg'),
+            ),
+            ListTile(
+              enabled: true,
+              title: Text(
+                S.of(context)!.optionHome,
+                style: GoogleFonts.galada(color: Colors.pinkAccent),
               ),
-              ListTile(
-                enabled: true,
-                title: Text(
-                  S.of(context)!.optionHome,
-                  style: GoogleFonts.galada(color: Colors.pinkAccent),
-                ),
-                onTap: () {
-                  Navigator.of(context).pop();
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            ListTile(
+              title: Text(
+                S.of(context)!.useAllCards,
+                style: GoogleFonts.galada(color: Colors.pinkAccent),
+              ),
+              trailing: Switch.adaptive(
+                value: _allDeckChoice.allDeck,
+                activeColor: Colors.pinkAccent,
+                onChanged: (value) {
+                  _allDeckChoice.allDeck = value;
                 },
               ),
-              ListTile(
-                title: Text(
-                  S.of(context)!.useAllCards,
-                  style: GoogleFonts.galada(color: Colors.pinkAccent),
-                ),
-                trailing: Switch.adaptive(
-                  value: _allDeckChoice.allDeck,
-                  activeColor: Colors.pinkAccent,
-                  onChanged: (value) {
-                    _allDeckChoice.allDeck = value;
-                  },
-                ),
+            ),
+            ListTile(
+              title: Text(
+                S.of(context)!.onlyUprightReading,
+                style: GoogleFonts.galada(color: Colors.pinkAccent),
               ),
-              ListTile(
-                title: Text(
-                  S.of(context)!.onlyUprightReading,
-                  style: GoogleFonts.galada(color: Colors.pinkAccent),
-                ),
-                trailing: Switch.adaptive(
-                  value: _allDeckChoice.onlyUpright,
-                  activeColor: Colors.pinkAccent,
-                  onChanged: (value) {
-                    _allDeckChoice.onlyUpright = value;
-                  },
-                ),
-              ),
-              ListTile(
-                title: Text(
-                  S.of(context)!.optionShare,
-                  style: GoogleFonts.galada(color: Colors.pinkAccent),
-                ),
-                onTap: () {
-                  FlutterShare.share(
-                      title: 'Tarot App',
-                      text: 'Example share text',
-                      linkUrl:
-                          'https://play.google.com/store/apps/details?id=com.mundodiferente.tarotcardapp',
-                      chooserTitle: 'Example Chooser Title');
+              trailing: Switch.adaptive(
+                value: _allDeckChoice.onlyUpright,
+                activeColor: Colors.pinkAccent,
+                onChanged: (value) {
+                  _allDeckChoice.onlyUpright = value;
                 },
               ),
-              ListTile(
-                title: Text(
-                  S.of(context)!.privacyPolicy,
-                  style: GoogleFonts.galada(color: Colors.pinkAccent),
-                ),
-                onTap: () {
-                  Navigator.pop(context);
-                  //_displayDialog(context);
-                },
+            ),
+            ListTile(
+              title: Text(
+                S.of(context)!.optionShare,
+                style: GoogleFonts.galada(color: Colors.pinkAccent),
               ),
-              ListTile(
-                title: Text(
-                  S.of(context)!.optionExit,
-                  style: GoogleFonts.galada(color: Colors.pinkAccent),
-                ),
-                onTap: () {
-                  //SystemNavigator.pop();
-                },
+              onTap: () {
+                FlutterShare.share(
+                    title: 'Tarot App',
+                    text: 'Example share text',
+                    linkUrl:
+                        'https://play.google.com/store/apps/details?id=com.mundodiferente.tarotcardapp',
+                    chooserTitle: 'Example Chooser Title');
+              },
+            ),
+            ListTile(
+              title: Text(
+                S.of(context)!.privacyPolicy,
+                style: GoogleFonts.galada(color: Colors.pinkAccent),
               ),
-            ],
-          ),
+              onTap: () {
+                Navigator.pop(context);
+                //_displayDialog(context);
+              },
+            ),
+            ListTile(
+              title: Text(
+                S.of(context)!.optionExit,
+                style: GoogleFonts.galada(color: Colors.pinkAccent),
+              ),
+              onTap: () {
+                //SystemNavigator.pop();
+              },
+            ),
+          ],
         ),
       ),
       body: Stack(
         children: <Widget>[
-          Container(
+          SizedBox(
             width: double.infinity,
             height: double.infinity,
             child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.only(
                   top: 30.0,
@@ -159,14 +157,14 @@ class _MyHomePageState extends State<MyHomePage> {
                   mainAxisSize: MainAxisSize.max,
                   children: <Widget>[
                     _SingleCardChoice(),
-                    SizedBox(
+                    const SizedBox(
                       height: 10.0,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10.0,
                     ),
-                    SpreadSwiper(),
-                    SizedBox(
+                    const SpreadSwiper(),
+                    const SizedBox(
                       height: 20.0,
                     ),
                     _TarotTutorial(
@@ -193,7 +191,6 @@ class _MyHomePageState extends State<MyHomePage> {
                       isMayorArcana: false,
                       startPosition: 50,
                     ),
-
                     _TarotTutorial(
                       image: 'assets/images/pentacles.jpg',
                       title: S.of(context)!.tutorialMinorPentacles,
@@ -217,7 +214,7 @@ class _TarotTutorial extends StatelessWidget {
   final bool isMayorArcana;
   final int startPosition;
 
-  _TarotTutorial(
+  const _TarotTutorial(
       {required this.image,
       required this.title,
       required this.isMayorArcana,
@@ -225,37 +222,36 @@ class _TarotTutorial extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: <Widget>[
-          SizedBox(
-            height: 10.0,
+    return Column(
+      children: <Widget>[
+        const SizedBox(
+          height: 10.0,
+        ),
+        _TarotTutorialSlivers(
+          image: image,
+          title: title,
+          page: TutorialCardsPage(
+            isMayorArcana: isMayorArcana,
+            startPosition: startPosition,
+            title: title,
+            image: image,
           ),
-          _TarotTutorialSlivers(
-            image: this.image,
-            title: this.title,
-            page: TutorialCardsPage(
-              isMayorArcana: this.isMayorArcana,
-              startPosition: this.startPosition,
-              title: this.title,
-              image: this.image,
-            ),
-          ),
-          SizedBox(
-            height: 10.0,
-          ),
-        ],
-      ),
+        ),
+        const SizedBox(
+          height: 10.0,
+        ),
+      ],
     );
   }
 }
 
+@immutable
 class _TarotTutorialSlivers extends StatelessWidget {
   final String image;
   final String title;
-  final page;
+  final Widget page;
 
-  _TarotTutorialSlivers(
+  const _TarotTutorialSlivers(
       {required this.image, required this.title, required this.page});
 
   @override
@@ -269,17 +265,17 @@ class _TarotTutorialSlivers extends StatelessWidget {
 
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (_) => this.page,
+            builder: (_) => page,
           ),
         );
       },
-      child: Container(
+      child: SizedBox(
         height: 200.0,
         width: MediaQuery.of(context).size.width * 0.8,
         child: Stack(
           children: <Widget>[
             Hero(
-              tag: this.title,
+              tag: title,
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(
@@ -290,12 +286,12 @@ class _TarotTutorialSlivers extends StatelessWidget {
                       color: Colors.grey.withOpacity(0.5),
                       spreadRadius: 5,
                       blurRadius: 7,
-                      offset: Offset(0, 3), // changes position of shadow
+                      offset: const Offset(0, 3), // changes position of shadow
                     ),
                   ],
                 ),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.all(
+                  borderRadius: const BorderRadius.all(
                     Radius.circular(
                       24.0,
                     ),
@@ -317,7 +313,7 @@ class _TarotTutorialSlivers extends StatelessWidget {
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
-                  this.title,
+                  title,
                   style: GoogleFonts.galada(
                     fontSize: 40.0,
                     color: Colors.white,
@@ -333,7 +329,7 @@ class _TarotTutorialSlivers extends StatelessWidget {
 }
 
 class SpreadSwiper extends StatelessWidget {
-  SpreadSwiper();
+  const SpreadSwiper({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -356,7 +352,7 @@ class SpreadSwiper extends StatelessWidget {
       S.of(context)!.titleTrueLoveSpread,
     ];
 
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: 400.0,
       child: Swiper(
@@ -379,7 +375,7 @@ class SpreadSwiper extends StatelessWidget {
               ),
               Center(
                 child: Text(
-                  '${pagesTitles[index]}',
+                  pagesTitles[index],
                   style: GoogleFonts.galada(
                     color: Colors.white,
                     fontSize: 20.0,
@@ -389,7 +385,7 @@ class SpreadSwiper extends StatelessWidget {
             ],
           );
         },
-        pagination: new SwiperPagination(
+        pagination: SwiperPagination(
           builder: DotSwiperPaginationBuilder(
             activeColor: Colors.pinkAccent,
             color: Colors.blueGrey.withOpacity(
@@ -446,11 +442,11 @@ class _SingleCardChoice extends StatelessWidget {
                       color: Colors.grey.withOpacity(0.5),
                       spreadRadius: 5,
                       blurRadius: 7,
-                      offset: Offset(0, 3), // changes position of shadow
+                      offset: const Offset(0, 3), // changes position of shadow
                     ),
                   ],
                 ),
-                child: ClipRRect(
+                child: const ClipRRect(
                   borderRadius: BorderRadius.all(
                     Radius.circular(
                       24.0,

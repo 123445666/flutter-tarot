@@ -7,7 +7,7 @@ import 'package:vuabian/src/providers/all_deck.dart';
 import 'package:vuabian/src/providers/interstitial_counter.dart';
 import 'src/providers/current_index.dart';
 
-// INTERNACIONALIZATION
+// INTERNATIONALIZATION
 import 'package:vuabian/generated/l10n.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -45,12 +45,12 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/home': (context) => MyHomePage(),
+        '/home': (context) => const MyHomePage(),
       },
       title: 'Material App',
-      home: MyHomePage(),
+      home: const MyHomePage(),
       // PlanetarySpreadPage(),
-      localizationsDelegates: [
+      localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
