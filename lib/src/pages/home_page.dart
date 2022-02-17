@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card.dart';
 
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_share/flutter_share.dart';
+import 'package:vuabian/src/providers/all_deck.dart';
+import 'package:vuabian/src/providers/interstitial_counter.dart';
+
+// INTERNACIONALIZATION
+import 'package:vuabian/generated/l10n.dart';
+
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  //const MyHomePage({Key? key, required this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -13,28 +22,18 @@ class MyHomePage extends StatefulWidget {
   // used by the build method of the State. Fields in a Widget subclass are
   // always marked "final".
 
-  final String title;
+  //final String title;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    final _allDeckChoice = Provider.of<AllDeck>(context);
+    final _interstitialCounter = Provider.of<InterstitialCounter>(context);
+
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -43,9 +42,99 @@ class _MyHomePageState extends State<MyHomePage> {
     // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        backgroundColor: Colors.pinkAccent,
+        centerTitle: true,
+        title: Text(
+          'Tarot',
+          style: GoogleFonts.galada(
+            fontSize: 40.0,
+            color: Colors.white,
+          ),
+        ),
+      ),
+      drawer: Drawer(
+        child: Container(
+          child: Column(
+            children: <Widget>[
+              Container(
+                child: Image(
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                  image: AssetImage('assets/images/oracle.jpg'),
+                ),
+              ),
+              ListTile(
+                enabled: true,
+                title: Text(
+                  S.of(context)!.optionHome,
+                  style: GoogleFonts.galada(color: Colors.pinkAccent),
+                ),
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              ListTile(
+                title: Text(
+                  S.of(context)!.useAllCards,
+                  style: GoogleFonts.galada(color: Colors.pinkAccent),
+                ),
+                trailing: Switch.adaptive(
+                  value: _allDeckChoice.allDeck,
+                  activeColor: Colors.pinkAccent,
+                  onChanged: (value) {
+                    _allDeckChoice.allDeck = value;
+                  },
+                ),
+              ),
+              ListTile(
+                title: Text(
+                  S.of(context)!.onlyUprightReading,
+                  style: GoogleFonts.galada(color: Colors.pinkAccent),
+                ),
+                trailing: Switch.adaptive(
+                  value: _allDeckChoice.onlyUpright,
+                  activeColor: Colors.pinkAccent,
+                  onChanged: (value) {
+                    _allDeckChoice.onlyUpright = value;
+                  },
+                ),
+              ),
+              ListTile(
+                title: Text(
+                  S.of(context)!.optionShare,
+                  style: GoogleFonts.galada(color: Colors.pinkAccent),
+                ),
+                onTap: () {
+                  FlutterShare.share(
+                      title: 'Tarot App',
+                      text: 'Example share text',
+                      linkUrl: 'https://play.google.com/store/apps/details?id=com.mundodiferente.tarotcardapp',
+                      chooserTitle: 'Example Chooser Title'
+                  );
+                },
+              ),
+              ListTile(
+                title: Text(
+                  S.of(context)!.privacyPolicy,
+                  style: GoogleFonts.galada(color: Colors.pinkAccent),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                  //_displayDialog(context);
+                },
+              ),
+              ListTile(
+                title: Text(
+                  S.of(context)!.optionExit,
+                  style: GoogleFonts.galada(color: Colors.pinkAccent),
+                ),
+                onTap: () {
+                  //SystemNavigator.pop();
+                },
+              ),
+            ],
+          ),
+        ),
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
@@ -86,8 +175,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               back: ClipRRect(
-                borderRadius:
-                BorderRadius.all(Radius.circular(5)),
+                borderRadius: BorderRadius.all(Radius.circular(5)),
                 child: Image(
                   fit: BoxFit.cover,
                   width: 200.0,
@@ -101,18 +189,9 @@ class _MyHomePageState extends State<MyHomePage> {
             const Text(
               'You have pushed the button this many times:',
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
