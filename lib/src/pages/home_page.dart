@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flip_card/flip_card.dart';
-import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
+import 'package:card_swiper/card_swiper.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -115,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     title: 'Tarot App',
                     text: 'Example share text',
                     linkUrl:
-                        'https://play.google.com/store/apps/details?id=com.mundodiferente.tarotcardapp',
+                        'https://play.google.com/store/apps/details?id=com.mundodiferente.vuabian',
                     chooserTitle: 'Example Chooser Title');
               },
             ),
@@ -336,17 +335,6 @@ class SpreadSwiper extends StatelessWidget {
     final _interstitialCounter = Provider.of<InterstitialCounter>(context);
 
     List<String> pagesTitles = [
-      S.of(context)!.titleAstrologicalSpread,
-      S.of(context)!.titleBirthdaySpread,
-      S.of(context)!.titleCelticCrossSpread,
-      S.of(context)!.titleCrossAndTriangleSpread,
-      S.of(context)!.titleDreamExplorationSpread,
-      S.of(context)!.titleMandalaSpread,
-      S.of(context)!.titlePastLifeSpread,
-      S.of(context)!.titlePlanetarySpread,
-      S.of(context)!.titleRelationshipSpread,
-      S.of(context)!.titleStarGuideSpread,
-      S.of(context)!.titleTetraktysSpread,
       S.of(context)!.titleThreeCardsSpread,
       S.of(context)!.titleTreeOfLifeSpread,
       S.of(context)!.titleTrueLoveSpread,
@@ -393,7 +381,7 @@ class SpreadSwiper extends StatelessWidget {
             ),
           ),
         ),
-        itemCount: 14,
+        itemCount: 3,
         itemWidth: 300.0,
         itemHeight: 300.0,
         layout: SwiperLayout.STACK,
