@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card.dart';
+import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_share/flutter_share.dart';
+import 'package:parallax/parallax.dart';
+
+import 'package:vuabian/src/pages/tutorial_cards_page.dart';
+import 'package:vuabian/src/pages/single_tarot_spread_page.dart';
+
 import 'package:vuabian/src/providers/all_deck.dart';
 import 'package:vuabian/src/providers/interstitial_counter.dart';
+import 'package:vuabian/src/routes/spread_routes.dart';
 
 // INTERNACIONALIZATION
 import 'package:vuabian/generated/l10n.dart';
@@ -108,9 +115,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   FlutterShare.share(
                       title: 'Tarot App',
                       text: 'Example share text',
-                      linkUrl: 'https://play.google.com/store/apps/details?id=com.mundodiferente.tarotcardapp',
-                      chooserTitle: 'Example Chooser Title'
-                  );
+                      linkUrl:
+                          'https://play.google.com/store/apps/details?id=com.mundodiferente.tarotcardapp',
+                      chooserTitle: 'Example Chooser Title');
                 },
               ),
               ListTile(
@@ -136,61 +143,353 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
+      body: Stack(
+        children: <Widget>[
+          Container(
+            width: double.infinity,
+            height: double.infinity,
+            child: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  top: 30.0,
+                  bottom: 60.0,
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    _SingleCardChoice(),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    SpreadSwiper(),
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    _TarotTutorial(
+                      image: 'assets/images/arcana.jpg',
+                      title: S.of(context)!.tutorialMajor,
+                      isMayorArcana: true,
+                      startPosition: 0,
+                    ),
+                    _TarotTutorial(
+                      image: 'assets/images/wands.jpg',
+                      title: S.of(context)!.tutorialMinorWands,
+                      isMayorArcana: false,
+                      startPosition: 22,
+                    ),
+                    _TarotTutorial(
+                      image: 'assets/images/swords.jpg',
+                      title: S.of(context)!.tutorialMinorSwords,
+                      isMayorArcana: false,
+                      startPosition: 64,
+                    ),
+                    _TarotTutorial(
+                      image: 'assets/images/cups.jpg',
+                      title: S.of(context)!.tutorialMinorCups,
+                      isMayorArcana: false,
+                      startPosition: 50,
+                    ),
+
+                    _TarotTutorial(
+                      image: 'assets/images/pentacles.jpg',
+                      title: S.of(context)!.tutorialMinorPentacles,
+                      isMayorArcana: false,
+                      startPosition: 36,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _TarotTutorial extends StatelessWidget {
+  final String image;
+  final String title;
+  final bool isMayorArcana;
+  final int startPosition;
+
+  _TarotTutorial(
+      {required this.image,
+      required this.title,
+      required this.isMayorArcana,
+      required this.startPosition});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        children: <Widget>[
+          SizedBox(
+            height: 10.0,
+          ),
+          _TarotTutorialSlivers(
+            image: this.image,
+            title: this.title,
+            page: TutorialCardsPage(
+              isMayorArcana: this.isMayorArcana,
+              startPosition: this.startPosition,
+              title: this.title,
+              image: this.image,
+            ),
+          ),
+          SizedBox(
+            height: 10.0,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _TarotTutorialSlivers extends StatelessWidget {
+  final String image;
+  final String title;
+  final page;
+
+  _TarotTutorialSlivers(
+      {required this.image, required this.title, required this.page});
+
+  @override
+  Widget build(BuildContext context) {
+    final _interstitialCounter = Provider.of<InterstitialCounter>(context);
+    final List<String> listOfImages = [image];
+
+    return GestureDetector(
+      onTap: () {
+        _interstitialCounter.counter += 1;
+
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => this.page,
+          ),
+        );
+      },
+      child: Container(
+        height: 200.0,
+        width: MediaQuery.of(context).size.width * 0.8,
+        child: Stack(
           children: <Widget>[
-            FlipCard(
-              fill: Fill.fillBack,
-              // Fill the back side of the card to make in the same size as the front.
-              direction: FlipDirection.HORIZONTAL,
-              // default
-              front: Container(
-                child: RotatedBox(
-                  quarterTurns: 2,
+            Hero(
+              tag: this.title,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(
+                    25.0,
+                  ),
+                  boxShadow: <BoxShadow>[
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: Offset(0, 3), // changes position of shadow
+                    ),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(
+                      24.0,
+                    ),
+                  ),
+                  child: Parallax(
+                    parallaxImages: listOfImages,
+                    skewAlpha: 3.0,
+                    skewBeta: 7.0,
+                    height: 300.0,
+                    width: 500.0,
+                    paddingHorizontal: 10.0,
+                    viewportFraction: 0.8,
+                    circularBorder: true,
+                  ),
+                ),
+              ),
+            ),
+            Positioned.fill(
+              child: Align(
+                alignment: Alignment.center,
+                child: Text(
+                  this.title,
+                  style: GoogleFonts.galada(
+                    fontSize: 40.0,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SpreadSwiper extends StatelessWidget {
+  SpreadSwiper();
+
+  @override
+  Widget build(BuildContext context) {
+    final _interstitialCounter = Provider.of<InterstitialCounter>(context);
+
+    List<String> pagesTitles = [
+      S.of(context)!.titleAstrologicalSpread,
+      S.of(context)!.titleBirthdaySpread,
+      S.of(context)!.titleCelticCrossSpread,
+      S.of(context)!.titleCrossAndTriangleSpread,
+      S.of(context)!.titleDreamExplorationSpread,
+      S.of(context)!.titleMandalaSpread,
+      S.of(context)!.titlePastLifeSpread,
+      S.of(context)!.titlePlanetarySpread,
+      S.of(context)!.titleRelationshipSpread,
+      S.of(context)!.titleStarGuideSpread,
+      S.of(context)!.titleTetraktysSpread,
+      S.of(context)!.titleThreeCardsSpread,
+      S.of(context)!.titleTreeOfLifeSpread,
+      S.of(context)!.titleTrueLoveSpread,
+    ];
+
+    return Container(
+      width: double.infinity,
+      height: 400.0,
+      child: Swiper(
+        itemBuilder: (BuildContext context, int index) {
+          return Stack(
+            fit: StackFit.expand,
+            children: <Widget>[
+              ClipRRect(
+                borderRadius: BorderRadius.circular(
+                  25.0,
+                ),
+                child: Image(
+                  fit: BoxFit.cover,
+                  color: Colors.pinkAccent,
+                  colorBlendMode: BlendMode.darken,
+                  image: AssetImage(
+                    'assets/spreads/spread$index.jpg',
+                  ),
+                ),
+              ),
+              Center(
+                child: Text(
+                  '${pagesTitles[index]}',
+                  style: GoogleFonts.galada(
+                    color: Colors.white,
+                    fontSize: 20.0,
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+        pagination: new SwiperPagination(
+          builder: DotSwiperPaginationBuilder(
+            activeColor: Colors.pinkAccent,
+            color: Colors.blueGrey.withOpacity(
+              0.3,
+            ),
+          ),
+        ),
+        itemCount: 14,
+        itemWidth: 300.0,
+        itemHeight: 300.0,
+        layout: SwiperLayout.STACK,
+        onTap: (index) {
+          _interstitialCounter.counter += 1;
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (_) => pages[index],
+            ),
+          );
+        },
+        onIndexChanged: (index) {},
+      ),
+    );
+  }
+}
+
+class _SingleCardChoice extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final _interstitialCounter = Provider.of<InterstitialCounter>(context);
+
+    return GestureDetector(
+      onTap: () {
+        _interstitialCounter.counter += 1;
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => SingleTarotSpreadPage(),
+          ),
+        );
+      },
+      child: Stack(
+        children: <Widget>[
+          Center(
+            child: Hero(
+              tag: 'tarot_spread',
+              child: Container(
+                height: 300.0,
+                width: MediaQuery.of(context).size.width * 0.8,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(
+                    25.0,
+                  ),
+                  boxShadow: <BoxShadow>[
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: Offset(0, 3), // changes position of shadow
+                    ),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(
+                      24.0,
+                    ),
+                  ),
+//                    child: Image(
+//                      fit: BoxFit.cover,
+//                      color: Colors.pink,
+//                      colorBlendMode: BlendMode.darken,
+//                      height: 100.0,
+//                      image: AssetImage(
+//                        'assets/images/goddess.jpg',
+//                      ),
+//                    ),
                   child: Image(
                     fit: BoxFit.cover,
-                    width: 200.0,
+                    color: Colors.pinkAccent,
+                    colorBlendMode: BlendMode.darken,
                     image: AssetImage(
-                      //'assets/images/back.jpeg',
-                      'assets/images/tarotback.png',
+                      'assets/images/goddess.jpg',
                     ),
                   ),
                 ),
               ),
-              back: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(5)),
-                child: Image(
-                  fit: BoxFit.cover,
-                  width: 200.0,
-                  image: AssetImage(
-                    //'assets/images/back.jpeg',
-                    'assets/images/2.jpg',
-                  ),
+            ),
+          ),
+          Positioned.fill(
+            child: Align(
+              alignment: Alignment.center,
+              child: Text(
+                S.of(context)!.dailyReading,
+                style: GoogleFonts.galada(
+                  fontSize: 40.0,
+                  color: Colors.white,
                 ),
               ),
             ),
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
