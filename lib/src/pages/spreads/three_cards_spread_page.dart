@@ -51,14 +51,6 @@ class _ThreeCardsSpreadPageState extends State<ThreeCardsSpreadPage> {
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[
-//          Container(
-//            height: MediaQuery.of(context).size.height,
-//            decoration: BoxDecoration(
-//              gradient: LinearGradient(
-//                colors: [Colors.pinkAccent, Colors.purple],
-//              ),
-//            ),
-//          ),
           Image(
             fit: BoxFit.cover,
             color: Colors.pinkAccent,
@@ -102,7 +94,7 @@ class _ThreeCardsSpreadPageState extends State<ThreeCardsSpreadPage> {
                         ),
                       ),
                     ),
-                    Positioned(
+                    const Positioned(
                       bottom: 0,
                       child: TarotDeck(),
                     ),

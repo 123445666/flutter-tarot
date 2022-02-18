@@ -40,7 +40,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final _allDeckChoice = Provider.of<AllDeck>(context);
-    final _interstitialCounter = Provider.of<InterstitialCounter>(context);
 
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
@@ -409,7 +408,7 @@ class _SingleCardChoice extends StatelessWidget {
         _interstitialCounter.counter += 1;
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (_) => SingleTarotSpreadPage(),
+            builder: (_) => const SingleTarotSpreadPage(),
           ),
         );
       },

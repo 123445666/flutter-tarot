@@ -6,7 +6,7 @@ import 'package:vuabian/generated/l10n.dart';
 class SingleCardDetailPage extends StatefulWidget {
   final int index;
 
-  SingleCardDetailPage({required this.index});
+  const SingleCardDetailPage({Key? key, required this.index}) : super(key: key);
 
   @override
   _SingleCardDetailPageState createState() => _SingleCardDetailPageState();
@@ -284,7 +284,7 @@ class _SingleCardDetailPageState extends State<SingleCardDetailPage>
                             ),
                             child: ClipRRect(
                               borderRadius:
-                                  BorderRadius.all(const Radius.circular(5)),
+                                  const BorderRadius.all(Radius.circular(5)),
                               child: Image(
                                 fit: BoxFit.cover,
                                 width: 200.0,

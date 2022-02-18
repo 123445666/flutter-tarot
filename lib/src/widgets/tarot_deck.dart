@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vuabian/src/providers/all_deck.dart';
-import 'package:vuabian/src/providers/current_index.dart';
-import 'package:vuabian/src/providers/interstitial_counter.dart';
-import 'package:card_swiper/card_swiper.dart';
 
 class TarotDeck extends StatefulWidget {
+  const TarotDeck({Key? key}) : super(key: key);
+
   @override
   _TarotDeckState createState() => _TarotDeckState();
 }
@@ -43,7 +42,7 @@ class _TarotDeckState extends State<TarotDeck>
 
     _numOfCards =
         Provider.of<AllDeck>(context, listen: false).allDeck ? 78 : 22;
-    allCards = List<int>.generate(_numOfCards, (int) => int);
+    allCards = List<int>.generate(_numOfCards, (int numCard) => numCard);
 
     controller = ScrollController(
       initialScrollOffset: 10.0,
@@ -69,10 +68,7 @@ class _TarotDeckState extends State<TarotDeck>
 
   @override
   Widget build(BuildContext context) {
-    final currentIndex = Provider.of<CurrentIndexProvider>(context);
-    final _interstitialCounter = Provider.of<InterstitialCounter>(context);
 
-    int myData = 0;
     animationController.forward();
 
     return FadeTransition(

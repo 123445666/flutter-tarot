@@ -51,20 +51,12 @@ class _TreeOfLifeSpreadState extends State<TreeOfLifeSpread> {
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[
-//          Container(
-//            height: MediaQuery.of(context).size.height,
-//            decoration: BoxDecoration(
-//              gradient: LinearGradient(
-//                colors: [Colors.pinkAccent, Colors.purple],
-//              ),
-//            ),
-//          ),
-          Image(
-            fit: BoxFit.cover,
-            color: Colors.pinkAccent,
-            colorBlendMode: BlendMode.darken,
-            image: AssetImage(
-              'assets/spreads/spread${widget.index}.jpg',
+          Container(
+            height: MediaQuery.of(context).size.height,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.pinkAccent, Colors.purple],
+              ),
             ),
           ),
           SizedBox(

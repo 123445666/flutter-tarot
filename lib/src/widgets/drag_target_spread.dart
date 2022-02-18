@@ -9,10 +9,10 @@ import 'package:vuabian/src/providers/current_index.dart';
 import 'package:vuabian/src/providers/all_deck.dart';
 
 class DragTargetSpread extends StatefulWidget {
-  final int numberOrder;
+  final int? numberOrder;
   final bool? autoDetail;
 
-  const DragTargetSpread({Key? key, required this.numberOrder, this.autoDetail})
+  const DragTargetSpread({Key? key, this.numberOrder, this.autoDetail})
       : super(key: key);
 
   @override
@@ -33,11 +33,11 @@ class _DragTargetSpreadState extends State<DragTargetSpread> {
 }
 
 class DragTargetInstance extends StatefulWidget {
-  final int numberOrder;
+  final int? numberOrder;
   final bool? autoDetail;
 
   const DragTargetInstance(
-      {Key? key, required this.numberOrder, this.autoDetail})
+      {Key? key, this.numberOrder, this.autoDetail})
       : super(key: key);
 
   @override
@@ -235,7 +235,7 @@ class _DragTargetInstanceState extends State<DragTargetInstance>
                     borderRadius: BorderRadius.all(Radius.circular(5)),
                   ),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.all(const Radius.circular(5)),
+                    borderRadius: const BorderRadius.all(Radius.circular(5)),
                     child: Stack(
                       children: <Widget>[
                         RotatedBox(

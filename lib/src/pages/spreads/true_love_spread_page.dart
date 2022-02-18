@@ -113,7 +113,7 @@ class _TrueLoveSpreadPageState extends State<TrueLoveSpreadPage> {
                         ],
                       ),
                     ),
-                    Positioned(
+                    const Positioned(
                       bottom: 0,
                       child: TarotDeck(),
                     ),
