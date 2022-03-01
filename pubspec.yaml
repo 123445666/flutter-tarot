@@ -1,7 +1,7 @@
 name: vuabian
 description: vuabian.com app
 
-# The following line prevents the package from being accidentally published to
+# The following line prevents the packages from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
@@ -20,8 +20,8 @@ version: 1.0.0+1
 environment:
   sdk: ">=2.17.0-105.0.dev <3.0.0"
 
-# Dependencies specify other packages that your package needs in order to work.
-# To automatically upgrade your package dependencies to the latest versions
+# Dependencies specify other packages that your packages needs in order to work.
+# To automatically upgrade your packages dependencies to the latest versions
 # consider running `flutter pub upgrade --major-versions`. Alternatively,
 # dependencies can be manually updated by changing the version numbers below to
 # the latest version available on pub.dev. To see which dependencies have newer
@@ -49,12 +49,15 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
+  # The "flutter_lints" packages below contains a set of recommended lints to
+  # encourage good coding practices. The lint set provided by the packages is
   # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
+  # packages. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^1.0.0
+
+  deckscrollviewsafety:
+    path: packages/deckscrollviewsafety
 
 flutter_icons:
   android: "launcher_icon"
@@ -80,7 +83,7 @@ flutter:
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
-  # For details regarding adding assets from package dependencies, see
+  # For details regarding adding assets from packages dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
 
   # To add custom fonts to your application, add a fonts section here,
@@ -100,7 +103,7 @@ flutter:
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #
-  # For details regarding fonts from package dependencies,
+  # For details regarding fonts from packages dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
 flutter_intl:
   enabled: falses

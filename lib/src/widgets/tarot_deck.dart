@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vuabian/src/providers/all_deck.dart';
+import 'package:vuabian/src/providers/current_index.dart';
+import 'package:deckscrollviewsafety/index.dart';
 
 class TarotDeck extends StatefulWidget {
   const TarotDeck({Key? key}) : super(key: key);
@@ -68,7 +70,9 @@ class _TarotDeckState extends State<TarotDeck>
 
   @override
   Widget build(BuildContext context) {
+    final currentIndex = Provider.of<CurrentIndexProvider>(context);
 
+    int myData = 0;
     animationController.forward();
 
     return FadeTransition(
@@ -76,8 +80,81 @@ class _TarotDeckState extends State<TarotDeck>
       child: SizedBox(
         height: 150,
         width: MediaQuery.of(context).size.width,
-        child: const RotatedBox(
+        child: RotatedBox(
           quarterTurns: 1,
+          child: DeckScrollView.useDelegate(
+            layoutPow: 2.5,
+            itemExtent: 95,
+            controller: controller,
+            clipToSize: true,
+            physics: BouncingScrollPhysics(),
+            childDelegate: DeckChildBuilderDelegate(
+              builder: (context, index) => Draggable<int>(
+                maxSimultaneousDrags: 1,
+                affinity: Axis.vertical,
+                onDragStarted: () {
+                  currentIndex.currentIndex = getRand();
+                },
+                onDraggableCanceled: (vel, off) {
+                  setState(() {});
+                },
+                onDragCompleted: () {
+                  setState(() {
+                    myData = randomChoice;
+                    allCards.remove(randomChoice);
+                  });
+                },
+                data: myData,
+                childWhenDragging: Container(),
+                feedback: RotatedBox(
+                  quarterTurns: 2,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(blurRadius: 3, color: Color(0x44000000))
+                      ],
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                      child: Image(
+                        height: 150.0,
+                        fit: BoxFit.cover,
+                        image: AssetImage(
+                          //'assets/images/back.jpeg',
+                          'assets/images/tarotback.png',
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                child: RotatedBox(
+                  quarterTurns: 1,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Color(0xFF9c0c74),
+                      boxShadow: [
+                        BoxShadow(blurRadius: 3, color: Color(0x44000000))
+                      ],
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                      child: Image(
+                        fit: BoxFit.cover,
+                        image: AssetImage(
+                          //'assets/images/back.jpeg',
+                          'assets/images/tarotback.png',
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              childCount: allCards.length,
+            ),
+          ),
         ),
       ),
     );

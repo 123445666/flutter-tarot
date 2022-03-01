@@ -88,32 +88,6 @@ class _DragTargetInstanceState extends State<DragTargetInstance>
       child: !_accepted
           ? DragTarget<int>(
               onWillAccept: (data) {
-/*
-                if (widget.autoDetail == true) {
-                  goToPage.goToPage = currentIndex.currentIndex;
-                  Future<FlipCardState>.delayed(Duration(milliseconds: 1200),
-                          () {
-                        return _cardKey.currentState;
-                      })
-                    ..then((myVar) {
-                      myVar.toggleCard();
-                    })
-                    ..then((val) {
-                      Future.delayed(Duration(milliseconds: 1200), () {
-                        return Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => SingleCardDetailPage(
-                              index: goToPage.goToPage,
-                            ),
-                          ),
-                        );
-                      });
-                    });
-
-                }
-*/
-
                 return true;
               },
               onAccept: (data) {
@@ -156,7 +130,6 @@ class _DragTargetInstanceState extends State<DragTargetInstance>
                             color: Colors.grey,
                             colorBlendMode: BlendMode.hardLight,
                             image: AssetImage(
-                              //'assets/images/back.jpeg',
                               'assets/images/tarotback.png',
                             ),
                           ),
@@ -168,7 +141,7 @@ class _DragTargetInstanceState extends State<DragTargetInstance>
                       child: Text(
                         '${widget.numberOrder}',
                         style: GoogleFonts.galada(
-                          color: Colors.pink,
+                          color: Colors.black,
                           fontSize: 40.0,
                         ),
                       ),
@@ -208,7 +181,6 @@ class _DragTargetInstanceState extends State<DragTargetInstance>
                           child: Image(
                             fit: BoxFit.cover,
                             image: AssetImage(
-                              //'assets/images/back.jpeg',
                               'assets/images/tarotback.png',
                             ),
                           ),

@@ -25,7 +25,6 @@ class _ThreeCardsSpreadPageState extends State<ThreeCardsSpreadPage> {
 
   @override
   Widget build(BuildContext context) {
-    final _interstitialCounter = Provider.of<InterstitialCounter>(context);
 
     return Scaffold(
       appBar: AppBar(
